@@ -128,4 +128,8 @@ N
   padding: rem(20px);
   width: 100%;
 }
+
+a {
+  transition: none;
+}
 </style>
