@@ -49,15 +49,14 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.content {
-  z-index: -1;
-  padding-top: 5em;
+.home {
+  overflow: hidden;
 }
 
 .image {
   opacity: 0.3;
   position: absolute;
-  z-index: -1;
+  z-index: -3;
   top: 0;
   left: 0;
   width: 100%;
@@ -69,6 +68,7 @@ export default {
   width: 100%;
   height: 100vh;
   position: relative;
+  z-index: -1;
   &__header {
     max-width: rem(800px);
     background-color: $transparent-blue;
@@ -84,6 +84,7 @@ export default {
 
     h2 {
       margin-top: 0;
+      font-size: rem(50px);
 
       @include responsive(phone) {
         font-size: rem(30px);
