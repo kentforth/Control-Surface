@@ -2,7 +2,7 @@
   <div class="home">
     <div class="content">
       <div class="content__header">
-        <h2>Download example sketches for your DIY Midi Controller</h2>
+        <h2>Get example sketches for your DIY Midi Controller</h2>
         <img src="../assets/images/icons/download.svg" class="download-icon" />
         <h2>
           Create your own DIY midi controller with library Control Surface

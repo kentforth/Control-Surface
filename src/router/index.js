@@ -10,6 +10,24 @@ const routes = [
       layout: Default
     },
     component: () => import("../views/Home.vue")
+  },
+  {
+    path: "/categories",
+    name: "Categories",
+    meta: {
+      title: "Categories",
+      layout: Default
+    },
+    component: () => import("../views/Categories.vue")
+  },
+  {
+    path: "/categories/:title",
+    name: "Examples",
+    meta: {
+      title: "Examples",
+      layout: Default
+    },
+    component: () => import("../views/Examples.vue")
   }
 ];
 

@@ -37,7 +37,7 @@
             <span>Get Library</span>
             <fa icon="github-alt" type="fab" class="icon github-icon"></fa>
           </a>
-          <router-link :to="{ name: 'Home' }">
+          <router-link :to="{ name: 'Categories' }">
             <span>Sketch Examples</span>
           </router-link>
           <router-link :to="{ name: 'Home' }">
@@ -61,13 +61,9 @@ export default {
     };
   },
   methods: {
+    // Toggle navigation menu
     toggleNav() {
-      if (this.navigation === "open") {
-        this.navigation = "closed";
-      } else {
-        this.navigation = "open";
-      }
-      console.log(this.navigation);
+      this.navigation = this.navigation === "open" ? "closed" : "open";
     }
   }
 };
@@ -170,6 +166,7 @@ export default {
 }
 
 .hamburger-button {
+  display: none;
   width: 50px;
   height: 60px;
   margin: 0;
@@ -207,6 +204,10 @@ export default {
 
     top: 17px;
   }
+
+  @include responsive(phone) {
+    display: block;
+  }
 }
 
 .hamburger-active:nth-child(1) {
@@ -223,5 +224,9 @@ export default {
 
 .nav-active {
   height: 60vh;
+}
+
+.router-link-exact-active {
+  color: $accent;
 }
 </style>
