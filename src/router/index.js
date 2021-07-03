@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Default from "@/layouts/Default";
+import Admin from "@/layouts/Admin";
 
 const routes = [
   {
@@ -55,6 +56,20 @@ const routes = [
       layout: Default
     },
     component: () => import("../views/Contact")
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    redirect: "/admin/sketches"
+  },
+  {
+    path: "/admin/sketches",
+    name: "Admin-Sketches",
+    meta: {
+      title: "Admin/Sketches",
+      layout: Admin
+    },
+    component: () => import("../views/admin/Sketches")
   }
 ];
 
