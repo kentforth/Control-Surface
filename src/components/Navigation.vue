@@ -28,22 +28,26 @@
         }"
       >
         <div class="logo">
-          <router-link :to="{ name: 'Home' }">
+          <router-link :to="{ name: 'Home' }" @click="toggleNav">
             <img src="../assets/images/logo.png" alt="logo" />
           </router-link>
         </div>
         <div class="links">
-          <a href="https://github.com/tttapa/Control-Surface" target="_blank">
+          <a
+            href="https://github.com/tttapa/Control-Surface"
+            target="_blank"
+            @click="toggleNav"
+          >
             <span>Get Library</span>
             <fa icon="github-alt" type="fab" class="icon github-icon"></fa>
           </a>
-          <router-link :to="{ name: 'Categories' }">
+          <router-link :to="{ name: 'Categories' }" @click="toggleNav">
             <span>Sketch Examples</span>
           </router-link>
-          <router-link :to="{ name: 'Home' }">
+          <router-link :to="{ name: 'Tutorials' }" @click="toggleNav">
             <span>Video Tutorials</span>
           </router-link>
-          <router-link :to="{ name: 'Home' }">
+          <router-link :to="{ name: 'Home' }" @click="toggleNav">
             <span>Contact</span>
           </router-link>
         </div>
@@ -63,7 +67,9 @@ export default {
   methods: {
     // Toggle navigation menu
     toggleNav() {
-      this.navigation = this.navigation === "open" ? "closed" : "open";
+      if (window.innerWidth < 400) {
+        this.navigation = this.navigation === "open" ? "closed" : "open";
+      }
     }
   }
 };

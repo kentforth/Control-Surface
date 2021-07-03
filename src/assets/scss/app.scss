@@ -77,4 +77,21 @@ span {
   width: rem(24px);
 }
 
+// Scroll
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: $dark-gray;
+  border-radius: 20px;
+  border: 3px solid transparent;
+}
+
+
+
 

@@ -8817,6 +8817,11 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-easy-lightbox@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.1.0.tgz#9f22b9b2b2f7b97c4837b19f59ac5a3ffe1cf7ee"
+  integrity sha512-v3vhCB4CxAsFu3u86YFgiKmFIt8wRPk8x2JpqeKCNh6FUEFQoHlEFBngPRcBEHnjz9kJ99w+V5jRnd/SrcIGRQ==
+
 vue-eslint-parser@^7.5.0:
   version "7.5.0"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-7.5.0.tgz#b68221c55fee061899afcfb4441ec74c1495285e"

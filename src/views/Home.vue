@@ -71,7 +71,7 @@ export default {
   z-index: -1;
   &__header {
     max-width: rem(800px);
-    background-color: $transparent-blue;
+    background-color: $dark-gray;
     border-radius: 40px;
     padding: $padding * 2;
     position: absolute;

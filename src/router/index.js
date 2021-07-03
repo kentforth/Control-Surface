@@ -28,6 +28,24 @@ const routes = [
       layout: Default
     },
     component: () => import("../views/Examples.vue")
+  },
+  {
+    path: "/categories/:title/:id",
+    name: "Sketch",
+    meta: {
+      title: "Sketch",
+      layout: Default
+    },
+    component: () => import("../views/Sketch")
+  },
+  {
+    path: "/tutorials",
+    name: "Tutorials",
+    meta: {
+      title: "Video Tutorials",
+      layout: Default
+    },
+    component: () => import("../views/Tutorials")
   }
 ];
 

@@ -100,14 +100,16 @@ N
   overflow: hidden;
   border-radius: $border-radius;
   cursor: pointer;
-  background-color: #fff;
   transition: 0.3s ease;
+  outline: 2px solid transparent;
+  position: relative;
 
   img {
     width: 100%;
     height: rem(250px);
     object-fit: contain;
     object-position: center;
+    background-color: #fff;
   }
 
   h2 {

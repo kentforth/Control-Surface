@@ -3,11 +3,13 @@
     <div class="examples">
       <div class="example-item" v-for="sketch in sketches" :key="sketch.id">
         <h2>{{ sketch.title }}</h2>
-        <img
-          src="../assets/images/icons/arduino.png"
-          :alt="sketch.title"
-          class="image"
-        />
+        <router-link :to="{ name: 'Sketch', params: { id: sketch.id } }">
+          <img
+            src="../assets/images/icons/arduino.png"
+            :alt="sketch.title"
+            class="image"
+          />
+        </router-link>
       </div>
     </div>
   </div>
@@ -38,7 +40,6 @@ export default {
     let currentRoute = this.$router.currentRoute._rawValue.params.title;
     const title = currentRoute.charAt(0).toUpperCase() + currentRoute.slice(1);
     window.document.title = title;
-    console.log(currentRoute);
   }
 };
 </script>
