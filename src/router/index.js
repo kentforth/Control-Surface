@@ -46,6 +46,15 @@ const routes = [
       layout: Default
     },
     component: () => import("../views/Tutorials")
+  },
+  {
+    path: "/contact",
+    name: "Contact",
+    meta: {
+      title: "Contact",
+      layout: Default
+    },
+    component: () => import("../views/Contact")
   }
 ];
 

@@ -28,27 +28,27 @@
         }"
       >
         <div class="logo">
-          <router-link :to="{ name: 'Home' }" @click="toggleNav">
-            <img src="../assets/images/logo.png" alt="logo" />
+          <router-link :to="{ name: 'Home' }">
+            <img
+              src="../assets/images/logo.png"
+              alt="logo"
+              @click="toggleNav"
+            />
           </router-link>
         </div>
         <div class="links">
-          <a
-            href="https://github.com/tttapa/Control-Surface"
-            target="_blank"
-            @click="toggleNav"
-          >
-            <span>Get Library</span>
+          <a href="https://github.com/tttapa/Control-Surface" target="_blank">
+            <span @click="toggleNav">Get Library</span>
             <fa icon="github-alt" type="fab" class="icon github-icon"></fa>
           </a>
-          <router-link :to="{ name: 'Categories' }" @click="toggleNav">
-            <span>Sketch Examples</span>
+          <router-link :to="{ name: 'Categories' }">
+            <span @click="toggleNav">Sketch Examples</span>
           </router-link>
-          <router-link :to="{ name: 'Tutorials' }" @click="toggleNav">
-            <span>Video Tutorials</span>
+          <router-link :to="{ name: 'Tutorials' }">
+            <span @click="toggleNav">Video Tutorials</span>
           </router-link>
-          <router-link :to="{ name: 'Home' }" @click="toggleNav">
-            <span>Contact</span>
+          <router-link :to="{ name: 'Contact' }">
+            <span @click="toggleNav">Contact</span>
           </router-link>
         </div>
       </div>
@@ -100,6 +100,7 @@ export default {
 
 .nav {
   position: fixed;
+  z-index: 999;
   top: 0;
   left: 0;
   width: 100%;
