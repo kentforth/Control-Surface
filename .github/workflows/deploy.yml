@@ -13,9 +13,9 @@ jobs:
       - name: Testing VPS connection and deploy project
         uses: appleboy/ssh-action@master
         with:
-          host: 46.229.214.53
-          port: 4040
-          username: kentforth
+          host: ${{ secrets.HOST}}
+          port: ${{ secrets.PORT}}
+          username: ${{ secrets.USERNAME}}
           key: ${{ secrets.PRIVATE_KEY}}
           script: |
             cd /home/kentforth/webapps/Control-Surface
