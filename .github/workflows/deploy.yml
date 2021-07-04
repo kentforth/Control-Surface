@@ -21,5 +21,6 @@ jobs:
             cd /home/kentforth/webapps/Control-Surface
             git pull
             yarn install --production
+            yarn add @vue/cli-service
             yarn build
 
