@@ -1,4 +1,5 @@
 name: Deployment Setup
+
 on:
   push:
     branches: [ master ]
