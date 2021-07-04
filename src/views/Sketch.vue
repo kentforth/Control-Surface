@@ -203,7 +203,7 @@ export default {
     }
   }
 
-  &__button {
+  &__button ::v-deep(.btn) {
     margin: 3em auto 0 auto;
     display: flex;
     justify-items: center;
@@ -219,6 +219,10 @@ export default {
       position: absolute;
       top: 0;
       right: rem(-80px);
+    }
+
+    .icon {
+      margin-left: 15px;
     }
   }
 

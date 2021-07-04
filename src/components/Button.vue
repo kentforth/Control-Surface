@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.btn::v-deep {
+.btn {
   font-size: rem(30px);
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 600;
@@ -29,9 +29,5 @@ export default {
   border: none;
   outline: none;
   cursor: pointer;
-
-  .icon {
-    margin-left: 15px;
-  }
 }
 </style>
