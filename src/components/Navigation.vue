@@ -67,7 +67,7 @@ export default {
   methods: {
     // Toggle navigation menu
     toggleNav() {
-      if (window.innerWidth < 400) {
+      if (window.innerWidth <= 411) {
         this.navigation = this.navigation === "open" ? "closed" : "open";
       }
     }
