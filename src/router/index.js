@@ -62,6 +62,8 @@ const routes = [
     name: "Admin",
     redirect: "/admin/sketches"
   },
+
+  // ADMIN
   {
     path: "/admin/sketches",
     name: "Admin-Sketches",
@@ -69,7 +71,16 @@ const routes = [
       title: "Admin/Sketches",
       layout: Admin
     },
-    component: () => import("../views/admin/Sketches")
+    component: () => import("../views/admin/SketchesList")
+  },
+  {
+    path: "/admin/sketches-add",
+    name: "Add-Sketch",
+    meta: {
+      title: "Add Sketch",
+      layout: Admin
+    },
+    component: () => import("../views/admin/AddSketch")
   }
 ];
 

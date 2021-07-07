@@ -1,9 +1,5 @@
 <template>
-  <button
-    @click="click"
-    class="btn-admin"
-    :class="[buttonAdminBackground, buttonAdminColor]"
-  >
+  <button class="btn-admin" :class="[buttonAdminBackground, buttonAdminColor]">
     <span>{{ title }}</span>
     <fa :icon="icon" :type="iconType" class="icon" />
   </button>
@@ -33,11 +29,6 @@ export default {
       type: String,
       default: ""
     }
-  },
-  methods: {
-    click() {
-      this.$emit("click");
-    }
   }
 };
 </script>
@@ -50,6 +41,7 @@ export default {
   padding: 10px 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
   font-size: rem(25px);
   cursor: pointer;
   outline: none;

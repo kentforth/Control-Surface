@@ -1,5 +1,5 @@
 <template>
-  <div class="default">
+  <div class="admin">
     <Navigation />
     <div class="page">
       <TheSidebar />
@@ -27,7 +27,9 @@ export default {
 
 .main {
   margin-left: 250px;
-  max-height: 100vh;
+  background-color: $gray-deep;
+  padding: 3em;
   width: 100%;
+  min-height: 92vh;
 }
 </style>

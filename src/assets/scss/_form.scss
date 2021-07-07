@@ -1,0 +1,17 @@
+.input-error{
+  border: 5px solid $error !important;
+}
+
+.error {
+  color: $error;
+  font-size: rem(18px);
+}
+
+.showError {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.hideError {
+  opacity: 0;
+}

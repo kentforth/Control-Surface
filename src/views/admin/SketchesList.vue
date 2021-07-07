@@ -7,6 +7,7 @@
         :icon-type="'fas'"
         :button-admin-background="'btn-admin-background'"
         :button-admin-color="'btn-admin-color'"
+        @click="addSketch"
       />
     </div>
   </div>
@@ -15,8 +16,13 @@
 <script>
 import ButtonAdmin from "@/components/common/ButtonAdmin";
 export default {
-  name: "Sketches",
-  components: { ButtonAdmin }
+  name: "SketchesList",
+  components: { ButtonAdmin },
+  methods: {
+    addSketch() {
+      this.$router.push({ name: "Add-Sketch" });
+    }
+  }
 };
 </script>
 
