@@ -23,4 +23,4 @@ jobs:
             yarn install --production
             yarn add @vue/cli-service
             yarn build
-
+            sudo systemctl restart nginx
