@@ -232,7 +232,6 @@ export default {
     },
 
     uploadImagesToFirebase(id) {
-      console.log(id);
       this.uploadImages.forEach(el => {
         firebase
           .storage()
