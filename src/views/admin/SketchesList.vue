@@ -10,6 +10,8 @@
         @click="addSketch"
       />
     </div>
+
+    <div class="sketches__table"></div>
   </div>
 </template>
 

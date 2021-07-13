@@ -89,7 +89,7 @@
         :loading="spinner.isLoading"
         :color="spinner.color"
         :size="spinner.size"
-      ></pulse-loader>
+      />
 
       <ButtonAdmin
         @click.prevent="submit"
@@ -221,23 +221,34 @@ export default {
      * @returns {Promise<void>}
      */
     saveSketchInFirebase() {
-      const dataBase = db.collection("sketches").doc();
-      dataBase.set({
-        title: this.form.title,
-        text: this.form.text,
-        tutorialUrl: this.form.tutorialUrl,
-        category: this.form.category
-      });
-      return dataBase;
+      try {
+        const dataBase = db.collection("sketches").doc();
+        dataBase.set({
+          title: this.form.title,
+          text: this.form.text,
+          tutorialUrl: this.form.tutorialUrl,
+          category: this.form.category,
+          imagesCount: this.uploadImages.length
+        });
+        return dataBase;
+      } catch (e) {
+        this.spinner.isLoading = false;
+        throw new Error(e);
+      }
     },
 
     uploadImagesToFirebase(id) {
-      this.uploadImages.forEach(el => {
-        firebase
-          .storage()
-          .ref(`sketches/${id}/${el.name}`)
-          .put(el);
-      });
+      try {
+        this.uploadImages.forEach(el => {
+          firebase
+            .storage()
+            .ref(`sketches/${id}/${el.name}`)
+            .put(el);
+        });
+      } catch (e) {
+        this.spinner.isLoading = false;
+        throw new Error(e);
+      }
     },
 
     /**
@@ -258,6 +269,7 @@ export default {
           this.form[key] = "";
         });
         this.category = "Choose Category";
+        this.uploadImages = [];
         this.spinner.isLoading = false;
       }
     }

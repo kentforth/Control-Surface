@@ -12,39 +12,76 @@
         </router-link>
       </div>
     </div>
+
+    <h1 v-if="!isSketchesFound">No sketches found=(</h1>
+
+    <pulse-loader
+      class="spinner"
+      :loading="spinner.isLoading"
+      :color="spinner.color"
+      :size="spinner.size"
+    />
   </div>
 </template>
 
 <script>
+import db from "../firebase/firebase";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+
 export default {
   name: "Examples",
-  data() {
-    return {
-      sketches: [
-        {
-          id: 1,
-          title: "CCButton"
-        },
-        {
-          id: 2,
-          title: "NoteButtons Matrix"
-        },
-        {
-          id: 3,
-          title: "NoteButton"
-        }
-      ]
-    };
+  components: { PulseLoader },
+  data: () => ({
+    isSketchesFound: true,
+    spinner: {
+      isLoading: false,
+      color: "#D9D57C",
+      size: "20px"
+    },
+
+    sketches: []
+  }),
+  created() {
+    this.getSketches();
   },
   mounted() {
     let currentRoute = this.$router.currentRoute._rawValue.params.title;
     const title = currentRoute.charAt(0).toUpperCase() + currentRoute.slice(1);
     window.document.title = title;
+  },
+
+  methods: {
+    async getSketches() {
+      this.spinner.isLoading = true;
+      const category = this.$route.params.title;
+      try {
+        await db
+          .collection("sketches")
+          .where("category", "==", category)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => [
+              this.sketches.push({ ...doc.data(), id: doc.id })
+            ]);
+            this.isSketchesFound = this.sketches.length > 0;
+          });
+        this.spinner.isLoading = false;
+      } catch (e) {
+        throw new Error(e);
+      }
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
+.container {
+  h1 {
+    color: $accent;
+    text-align: center;
+  }
+}
+
 .examples {
   padding: 7em 0 2em 0;
   display: grid;
@@ -92,5 +129,11 @@ export default {
   .image:hover {
     filter: drop-shadow(1px 2px 8px #1ce0ff);
   }
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 </style>

@@ -1,19 +1,24 @@
 <template>
   <div class="sketch">
-    <h1>Sketch</h1>
+    <h1>{{ sketch.title }}</h1>
 
     <div class="container">
-      <p>{{ sketch.description }}</p>
+      <div class="sketch__instructions">
+        <p>1. Copy and paste txt sketch file to Arduino IDE</p>
+        <p>2. Upload sketch to Arduino board</p>
+        <p>3. Done!</p>
+      </div>
+
       <div
         class="sketch__text"
-        :class="sketch.videoUrl ? 'sketch__text-short' : 'sketch__text-long'"
+        :class="sketch.tutorialUrl ? 'sketch__text-short' : 'sketch__text-long'"
       >
         <textarea rows="5" cols="20" class="textarea" v-model="sketch.text" />
-        <div class="video" v-if="sketch.videoUrl">
+        <div class="video" v-if="sketch.tutorialUrl">
           <iframe
             width="100%"
             height="280"
-            :src="sketch.videoUrl"
+            :src="sketch.tutorialUrl"
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
@@ -21,7 +26,7 @@
         </div>
       </div>
 
-      <div class="sketch__images">
+      <div class="sketch__images" v-if="sketch.thumbnail">
         <h2>Connection</h2>
         <img :src="sketch.thumbnail" alt="sketch-image" @click="showImages" />
       </div>
@@ -36,41 +41,56 @@
       </div>
     </div>
 
+    <pulse-loader
+      class="spinner"
+      :loading="spinner.isLoading"
+      :color="spinner.color"
+      :size="spinner.size"
+    />
+
     <vue-easy-lightbox
       escDisabled
       :visible="visible"
       :imgs="sketch.images"
       :index="index"
       @hide="hideImages"
-    ></vue-easy-lightbox>
+    />
   </div>
 </template>
 
 <script>
 import Button from "@/components/Button";
+import db from "../firebase/firebase";
+import firebase from "firebase/app";
+import "firebase/storage";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+
 export default {
   name: "Sketch",
-  components: { Button },
-  data() {
-    return {
-      isTextCopied: false,
-      visible: false,
-      index: 0,
-      buttonText: "Copy sketch file",
-      sketch: {
-        id: 1,
-        text: "asdasadasda",
-        description: "Send midi cc on button click",
-        videoUrl: "https://www.youtube.com/embed/hlWiI4xVXKY",
-        thumbnail:
-          "https://media.istockphoto.com/photos/green-leaf-with-dew-on-dark-nature-background-picture-id1050634172?k=6&m=1050634172&s=612x612&w=0&h=C6CWho9b4RDhCqvaivYOLV2LK6FzygYpAyLPBlF1i2c=",
-        images: [
-          "https://miro.medium.com/max/8256/1*5lpiSFo6j5dhrr6Z6RFd8Q.jpeg",
-          "https://cosmosmagazine.com/wp-content/uploads/2020/02/191010_nature.jpg",
-          "https://www.iucn.org/sites/dev/files/styles/850x500_no_menu_article/public/content/images/2020/roots_of_the_landscape_protecting_people_and_roads_-_girls_walking_on_local_road_with_grey_engineering_-_emily_goodwin.jpeg?itok=YqBxNHCD"
-        ]
-      }
-    };
+  components: { Button, PulseLoader },
+  data: () => ({
+    isTextCopied: false,
+    visible: false,
+    index: 0,
+    buttonText: "Copy sketch file",
+
+    spinner: {
+      isLoading: false,
+      color: "#D9D57C",
+      size: "20px"
+    },
+
+    sketch: {
+      id: 1,
+      title: "",
+      text: "",
+      tutorialUrl: "",
+      thumbnail: "",
+      images: []
+    }
+  }),
+  created() {
+    this.getSketch();
   },
   methods: {
     //show easy lightbox
@@ -84,7 +104,9 @@ export default {
       this.visible = false;
     },
 
-    //copy text from textarea
+    /**
+     * copy text from textarea
+     */
     copySketch() {
       this.isTextCopied = true;
 
@@ -92,6 +114,46 @@ export default {
         this.isTextCopied = false;
       }, 2000);
       navigator.clipboard.writeText(this.sketch.text);
+    },
+
+    async getSketch() {
+      this.spinner.isLoading = true;
+      try {
+        await db
+          .collection("sketches")
+          .doc(this.$route.params.id.toString())
+          .get()
+          .then(snapshot => {
+            const document = snapshot.data();
+            document.id = snapshot.id;
+            this.sketch = document;
+            this.sketch.images = [];
+            this.getImageFromFirebase();
+          });
+        this.spinner.isLoading = false;
+      } catch (e) {
+        this.spinner.isLoading = false;
+        throw new Error(e);
+      }
+    },
+
+    async getImageFromFirebase() {
+      if (this.sketch.imagesCount) {
+        for (let i = 1; i <= this.sketch.imagesCount; i++) {
+          try {
+            const image = await firebase
+              .storage()
+              .ref(`sketches/${this.sketch.id}`)
+              .child(`${this.sketch.title}_${i}.webp`)
+              .getDownloadURL();
+            this.sketch.images.push(image);
+            console.log(this.sketch.images);
+          } catch (e) {
+            throw new Error(e);
+          }
+        }
+        this.sketch.thumbnail = this.sketch.images[0];
+      }
     }
   }
 };
@@ -119,6 +181,15 @@ export default {
     margin-bottom: rem(20px);
     text-align: center;
     font-size: rem(18px);
+  }
+
+  &__instructions {
+    width: 30%;
+    margin: 0 auto;
+
+    p {
+      text-align: left;
+    }
   }
 
   &__text {
@@ -212,15 +283,6 @@ export default {
     position: relative;
     width: max-content;
 
-    .text-copied {
-      color: $success;
-      font-size: rem(18px);
-      margin: 0;
-      position: absolute;
-      top: 0;
-      right: rem(-80px);
-    }
-
     .icon {
       margin-left: 15px;
     }
@@ -231,6 +293,15 @@ export default {
     background-color: $turquoise;
   }
 
+  .text-copied {
+    color: $success;
+    font-size: rem(18px);
+    margin: 0;
+    position: absolute;
+    top: 102%;
+    left: 60%;
+  }
+
   @include responsive(tab-port) {
     padding: 10em 0 2em 0;
   }
@@ -238,6 +309,12 @@ export default {
   @include responsive(phone) {
     padding: 5em 0 2em 0;
   }
+}
+
+.spinner {
+  position: absolute;
+  top: 55%;
+  left: 50%;
 }
 
 // Animation
