@@ -7,11 +7,13 @@ import {
   faEnvelope,
   faFile,
   faVideo,
-  faSave
+  faSave,
+  faEdit,
+  faTrash
 } from "@fortawesome/free-solid-svg-icons";
 import FontAwesomeIcon from "@/libs/FontAwesomeIcon.vue";
 
 library.add(fab, faGithubAlt, faVk);
-library.add(fas, faCopy, faEnvelope, faFile, faVideo, faSave);
+library.add(fas, faCopy, faEnvelope, faFile, faVideo, faSave, faEdit, faTrash);
 
 export { FontAwesomeIcon };

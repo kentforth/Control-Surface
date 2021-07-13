@@ -147,7 +147,6 @@ export default {
               .child(`${this.sketch.title}_${i}.webp`)
               .getDownloadURL();
             this.sketch.images.push(image);
-            console.log(this.sketch.images);
           } catch (e) {
             throw new Error(e);
           }
