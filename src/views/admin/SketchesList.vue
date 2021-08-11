@@ -13,62 +13,100 @@
 
     <div class="sketches__table">
       <table>
-        <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Sketch Text</th>
-          <th>Category</th>
-          <th>Tutorial URL</th>
-          <th></th>
-        </tr>
-        <tr v-for="sketch in sketches" :key="sketch.id">
-          <td>{{ sketch.id }}</td>
-          <td>{{ sketch.title }}</td>
-          <td>{{ sketch.text }}</td>
-          <td>{{ sketch.category }}</td>
-          <td>{{ sketch.tutorialUrl }}</td>
-          <td>
-            <div class="sketches__table-buttons">
-              <button class="btn-transparent">
-                <fa icon="edit" type="fas" class="icon icon-edit" />
-              </button>
-              <button class="btn-transparent">
-                <fa icon="trash" type="fas" class="icon icon-trash" />
-              </button>
-            </div>
-          </td>
-        </tr>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Sketch Text</th>
+            <th>Category</th>
+            <th>Tutorial URL</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="sketch in sketches" :key="sketch.id">
+            <td>{{ sketch.id }}</td>
+            <td>{{ sketch.title }}</td>
+            <td>{{ sketch.text }}</td>
+            <td>{{ sketch.category }}</td>
+            <td>{{ sketch.tutorialUrl }}</td>
+            <td>
+              <div class="sketches__table-buttons">
+                <button class="btn-transparent" @click="editSketch(sketch.id)">
+                  <fa icon="edit" type="fas" class="icon icon-edit" />
+                </button>
+                <button class="btn-transparent">
+                  <fa icon="trash" type="fas" class="icon icon-trash" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
+    <pulse-loader
+      class="spinner"
+      :loading="spinner.isLoading"
+      :color="spinner.color"
+      :size="spinner.size"
+    />
   </div>
 </template>
 
 <script>
 import ButtonAdmin from "@/components/common/ButtonAdmin";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import db from "../../firebase/firebase";
+
 export default {
   name: "SketchesList",
-  components: { ButtonAdmin },
+  components: { ButtonAdmin, PulseLoader },
   data: () => ({
-    sketches: [
-      {
-        id: 1,
-        title: "SOme Title",
-        text: "sketch text",
-        category: "Buttons",
-        tutorialUrl: "some url"
-      },
-      {
-        id: 2,
-        title: "TRwo buttons",
-        text: "sketch text 2",
-        category: "Potentioometers",
-        tutorialUrl: "any URL"
-      }
-    ]
+    spinner: {
+      isLoading: false,
+      color: "#D9D57C",
+      size: "20px"
+    },
+
+    sketches: []
   }),
+  created() {
+    this.getAllSketches();
+  },
+  beforeUnmount() {
+    this.sketches = [];
+  },
   methods: {
     addSketch() {
       this.$router.push({ name: "Add-Sketch" });
+    },
+
+    /**
+     * get all sketches
+     * @returns {Promise<void>}
+     */
+    async getAllSketches() {
+      this.spinner.isLoading = true;
+      try {
+        await db
+          .collection("sketches")
+          .get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              console.log(doc.data());
+              let document = doc.data();
+              document.id = doc.id;
+              this.sketches.push(document);
+            });
+          });
+        this.spinner.isLoading = false;
+      } catch (e) {
+        this.spinner.isLoading = false;
+      }
+    },
+
+    editSketch(id) {
+      this.$router.push({ name: "EditSketch", params: { id: id } });
     }
   }
 };
@@ -129,6 +167,11 @@ export default {
       tr {
         text-align: left;
       }
+
+      tbody {
+        max-height: 500px;
+        overflow-y: scroll;
+      }
     }
   }
 
@@ -144,6 +187,12 @@ export default {
       width: 20px;
       height: 20px;
     }
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 55%;
   }
 }
 </style>

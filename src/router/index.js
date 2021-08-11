@@ -57,13 +57,14 @@ const routes = [
     },
     component: () => import("../views/Contact")
   },
+
+  // ADMIN
   {
     path: "/admin",
     name: "Admin",
     redirect: "/admin/sketches"
   },
 
-  // ADMIN
   {
     path: "/admin/sketches",
     name: "Admin-Sketches",
@@ -81,6 +82,15 @@ const routes = [
       layout: Admin
     },
     component: () => import("../views/admin/AddSketch")
+  },
+  {
+    path: "/admin/sketches/edit/:id",
+    name: "EditSketch",
+    meta: {
+      title: "Edit",
+      layout: Admin
+    },
+    component: () => import("../views/admin/EditSketch")
   }
 ];
 
