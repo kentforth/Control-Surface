@@ -216,7 +216,8 @@ export default {
     getSketch() {
       const id = this.$route.params.id;
       try {
-        db.collection("sketches")
+        db.firestore()
+          .collection("sketches")
           .doc(id.toString())
           .get()
           .then(snapshot => {
@@ -242,7 +243,8 @@ export default {
       const id = this.$route.params.id;
       try {
         this.spinner.isLoading = true;
-        db.collection("sketches")
+        db.firestore()
+          .collection("sketches")
           .doc(id.toString())
           .update({
             title: this.form.title,

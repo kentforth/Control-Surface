@@ -13,9 +13,21 @@
 <script>
 import Navigation from "@/components/Navigation";
 import TheSidebar from "@/components/admin/TheSidebar";
+import firebase from "firebase/app";
+import "firebase/auth";
+
 export default {
   name: "Admin",
-  components: { TheSidebar, Navigation }
+  components: { TheSidebar, Navigation },
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        this.$router.replace({ name: "Login" });
+      } else if (this.$route.path === "/login") {
+        this.$router.replace({ name: "Admin" });
+      }
+    });
+  }
 };
 </script>
 

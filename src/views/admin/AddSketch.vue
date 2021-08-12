@@ -222,7 +222,10 @@ export default {
      */
     saveSketchInFirebase() {
       try {
-        const dataBase = db.collection("sketches").doc();
+        const dataBase = db
+          .firestore()
+          .collection("sketches")
+          .doc();
         dataBase.set({
           title: this.form.title,
           text: this.form.text,
