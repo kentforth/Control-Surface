@@ -35,7 +35,10 @@
                 <button class="btn-transparent" @click="editSketch(sketch.id)">
                   <fa icon="edit" type="fas" class="icon icon-edit" />
                 </button>
-                <button class="btn-transparent">
+                <button
+                  class="btn-transparent"
+                  @click="deleteSketch(sketch.id)"
+                >
                   <fa icon="trash" type="fas" class="icon icon-trash" />
                 </button>
               </div>
@@ -73,9 +76,7 @@ export default {
   created() {
     this.getAllSketches();
   },
-  beforeUnmount() {
-    this.sketches = [];
-  },
+
   methods: {
     addSketch() {
       this.$router.push({ name: "Add-Sketch" });
@@ -93,7 +94,6 @@ export default {
           .get()
           .then(snapshot => {
             snapshot.forEach(doc => {
-              console.log(doc.data());
               let document = doc.data();
               document.id = doc.id;
               this.sketches.push(document);
@@ -107,6 +107,24 @@ export default {
 
     editSketch(id) {
       this.$router.push({ name: "EditSketch", params: { id: id } });
+    },
+
+    async deleteSketch(id) {
+      this.spinner.isLoading = true;
+      try {
+        await db
+          .collection("sketches")
+          .doc(id)
+          .delete()
+          .then(() => {
+            this.sketches = [];
+            this.getAllSketches();
+          });
+
+        this.spinner.isLoading = false;
+      } catch (e) {
+        this.spinner.isLoading = false;
+      }
     }
   }
 };

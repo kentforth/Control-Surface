@@ -399,12 +399,27 @@ export default {
     background-color: $gray-middle;
     margin-top: rem(10px);
     width: 67%;
+    max-height: 200px;
+    overflow-y: scroll;
     border-radius: $border-radius;
-    overflow: hidden;
     position: absolute;
     top: 100px;
     z-index: 9999;
     left: 0;
+  }
+
+  &__category-options::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &__category-options::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &__category-options::-webkit-scrollbar-thumb {
+    background-color: $secondary;
+    border-radius: 20px;
+    border: 3px solid transparent;
   }
 
   &__category-options-item {
