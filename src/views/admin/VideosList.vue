@@ -2,12 +2,12 @@
   <div class="sketches">
     <div class="sketches__buttons">
       <ButtonAdmin
-        :title="'Add Sketch'"
-        :icon="'file'"
+        :title="'Add Video'"
+        :icon="'video'"
         :icon-type="'fas'"
         :button-admin-background="'btn-admin-background'"
         :button-admin-color="'btn-admin-color'"
-        @click="addSketch"
+        @click="addVideo"
       />
     </div>
 
@@ -17,28 +17,21 @@
           <tr>
             <th>#</th>
             <th>Title</th>
-            <th>Sketch Text</th>
-            <th>Category</th>
-            <th>Tutorial URL</th>
+            <th>URL</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="sketch in sketches" :key="sketch.id">
+          <tr v-for="sketch in videos" :key="sketch.id">
             <td>{{ sketch.id }}</td>
             <td>{{ sketch.title }}</td>
-            <td>{{ sketch.text }}</td>
-            <td>{{ sketch.category }}</td>
-            <td>{{ sketch.tutorialUrl }}</td>
+            <td>{{ sketch.url }}</td>
             <td>
               <div class="sketches__table-buttons">
-                <button class="btn-transparent" @click="editSketch(sketch.id)">
+                <button class="btn-transparent" @click="editVideo(sketch.id)">
                   <fa icon="edit" type="fas" class="icon icon-edit" />
                 </button>
-                <button
-                  class="btn-transparent"
-                  @click="deleteSketch(sketch.id)"
-                >
+                <button class="btn-transparent" @click="deleteVideo(sketch.id)">
                   <fa icon="trash" type="fas" class="icon icon-trash" />
                 </button>
               </div>
@@ -62,7 +55,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import firebaseApp from "../../firebase/firebase";
 
 export default {
-  name: "SketchesList",
+  name: "VideosList",
   components: { ButtonAdmin, PulseLoader },
   data: () => ({
     spinner: {
@@ -71,33 +64,33 @@ export default {
       size: "20px"
     },
 
-    sketches: []
+    videos: []
   }),
   created() {
-    this.getAllSketches();
+    this.getAllVideos();
   },
 
   methods: {
-    addSketch() {
+    addVideo() {
       this.$router.push({ name: "Add-Sketch" });
     },
 
     /**
-     * get all sketches
+     * get all videos
      * @returns {Promise<void>}
      */
-    async getAllSketches() {
+    async getAllVideos() {
       this.spinner.isLoading = true;
       try {
         await firebaseApp
           .firestore()
-          .collection("sketches")
+          .collection("videos")
           .get()
           .then(snapshot => {
             snapshot.forEach(doc => {
               let document = doc.data();
               document.id = doc.id;
-              this.sketches.push(document);
+              this.videos.push(document);
             });
           });
         this.spinner.isLoading = false;
@@ -106,11 +99,11 @@ export default {
       }
     },
 
-    editSketch(id) {
+    editVideo(id) {
       this.$router.push({ name: "EditSketch", params: { id: id } });
     },
 
-    async deleteSketch(id) {
+    async deleteVideo(id) {
       this.spinner.isLoading = true;
       try {
         await firebaseApp
@@ -119,8 +112,8 @@ export default {
           .doc(id)
           .delete()
           .then(() => {
-            this.sketches = [];
-            this.getAllSketches();
+            this.videos = [];
+            this.getAllVideos();
           });
 
         this.spinner.isLoading = false;
@@ -152,6 +145,12 @@ export default {
 
   .btn-admin-color {
     color: $dark-purple;
+  }
+
+  ::v-deep(.btn-admin) {
+    .icon {
+      width: 25px;
+    }
   }
 
   &__table {

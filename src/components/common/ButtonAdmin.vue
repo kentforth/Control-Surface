@@ -54,6 +54,7 @@ export default {
 
   .icon {
     margin-left: 10px;
+    width: 17px;
   }
 }
 </style>

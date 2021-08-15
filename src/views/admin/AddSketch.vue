@@ -106,9 +106,8 @@
 <script>
 import ButtonAdmin from "@/components/common/ButtonAdmin";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import firebase from "firebase/app";
 import "firebase/storage";
-import db from "../../firebase/firebase";
+import firebaseApp from "../../firebase/firebase";
 
 export default {
   name: "AddSketch",
@@ -222,7 +221,7 @@ export default {
      */
     saveSketchInFirebase() {
       try {
-        const dataBase = db
+        const dataBase = firebaseApp
           .firestore()
           .collection("sketches")
           .doc();
@@ -243,7 +242,7 @@ export default {
     uploadImagesToFirebase(id) {
       try {
         this.uploadImages.forEach(el => {
-          firebase
+          firebaseApp
             .storage()
             .ref(`sketches/${id}/${el.name}`)
             .put(el);

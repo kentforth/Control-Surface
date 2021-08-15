@@ -77,12 +77,21 @@ const routes = [
   },
   {
     path: "/admin/sketches",
-    name: "Admin-Sketches",
+    name: "SketchesList",
     meta: {
       title: "Admin/Sketches",
       layout: Admin
     },
     component: () => import("../views/admin/SketchesList")
+  },
+  {
+    path: "/admin/videos",
+    name: "VideosList",
+    meta: {
+      title: "Admin/Videos",
+      layout: Admin
+    },
+    component: () => import("../views/admin/VideosList")
   },
   {
     path: "/admin/sketches-add",

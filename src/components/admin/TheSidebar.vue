@@ -1,10 +1,10 @@
 <template>
   <div class="sidebar">
-    <router-link :to="{ name: 'Admin-Sketches' }">
+    <router-link :to="{ name: 'SketchesList' }">
       <fa icon="file" type="fas" class="icon" />
       Sketches
     </router-link>
-    <router-link :to="{ name: 'Home' }">
+    <router-link :to="{ name: 'VideosList' }">
       <fa icon="video" type="fas" class="icon" />
       Videos
     </router-link>
