@@ -103,6 +103,15 @@ const routes = [
     component: () => import("../views/admin/AddSketch")
   },
   {
+    path: "/admin/video-add",
+    name: "Add-Video",
+    meta: {
+      title: "Add Video",
+      layout: Admin
+    },
+    component: () => import("../views/admin/AddVideo")
+  },
+  {
     path: "/admin/sketches/edit/:id",
     name: "EditSketch",
     meta: {
@@ -110,6 +119,15 @@ const routes = [
       layout: Admin
     },
     component: () => import("../views/admin/EditSketch")
+  },
+  {
+    path: "/admin/videos/edit/:id",
+    name: "EditVideo",
+    meta: {
+      title: "Edit",
+      layout: Admin
+    },
+    component: () => import("../views/admin/EditVideo")
   }
 ];
 

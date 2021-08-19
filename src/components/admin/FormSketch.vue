@@ -88,7 +88,7 @@
 <script>
 import ButtonAdmin from "@/components/common/ButtonAdmin";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import db from "../../firebase/firebase";
+import firebaseApp from "../../firebase/firebase";
 
 export default {
   name: "FormSketch",
@@ -216,7 +216,8 @@ export default {
     getSketch() {
       const id = this.$route.params.id;
       try {
-        db.firestore()
+        firebaseApp
+          .firestore()
           .collection("sketches")
           .doc(id.toString())
           .get()
@@ -243,7 +244,8 @@ export default {
       const id = this.$route.params.id;
       try {
         this.spinner.isLoading = true;
-        db.firestore()
+        firebaseApp
+          .firestore()
           .collection("sketches")
           .doc(id.toString())
           .update({

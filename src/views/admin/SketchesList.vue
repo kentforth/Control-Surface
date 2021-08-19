@@ -110,6 +110,11 @@ export default {
       this.$router.push({ name: "EditSketch", params: { id: id } });
     },
 
+    /**
+     * delete sketch
+     * @param id
+     * @returns {Promise<void>}
+     */
     async deleteSketch(id) {
       this.spinner.isLoading = true;
       try {
@@ -120,10 +125,27 @@ export default {
           .delete()
           .then(() => {
             this.sketches = [];
+            this.deleteImages(id);
             this.getAllSketches();
           });
 
         this.spinner.isLoading = false;
+      } catch (e) {
+        this.spinner.isLoading = false;
+      }
+    },
+
+    /**
+     * delete folder with images in Firebase
+     * @param id
+     * @returns {Promise<void>}
+     */
+    async deleteImages(id) {
+      try {
+        await firebaseApp
+          .storage(`sketches/${id}`)
+          .ref(id)
+          .delete();
       } catch (e) {
         this.spinner.isLoading = false;
       }

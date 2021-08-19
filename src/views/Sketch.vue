@@ -60,7 +60,7 @@
 
 <script>
 import Button from "@/components/Button";
-import db from "../firebase/firebase";
+import firebaseApp from "../firebase/firebase";
 import firebase from "firebase/app";
 import "firebase/storage";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
@@ -119,7 +119,8 @@ export default {
     async getSketch() {
       this.spinner.isLoading = true;
       try {
-        await db
+        await firebaseApp
+          .firestore()
           .collection("sketches")
           .doc(this.$route.params.id.toString())
           .get()

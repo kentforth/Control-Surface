@@ -6,7 +6,7 @@
         <iframe
           width="100%"
           height="250"
-          :src="video.videoUrl"
+          :src="video.url"
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
@@ -14,41 +14,56 @@
         <h2>{{ video.title }}</h2>
       </div>
     </div>
+
+    <pulse-loader
+      class="spinner"
+      :loading="spinner.isLoading"
+      :color="spinner.color"
+      :size="spinner.size"
+    />
   </div>
 </template>
 
 <script>
+import firebaseApp from "@/firebase/firebase";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+
 export default {
   name: "Tutorials",
+  components: { PulseLoader },
   data: () => ({
-    videos: [
-      {
-        id: 1,
-        title: "Ola Englund",
-        videoUrl: "https://www.youtube.com/embed/hlWiI4xVXKY"
-      },
-      {
-        id: 2,
-        title: "Ola Englund",
-        videoUrl: "https://www.youtube.com/embed/hlWiI4xVXKY"
-      },
-      {
-        id: 3,
-        title: "Ola Englund",
-        videoUrl: "https://www.youtube.com/embed/hlWiI4xVXKY"
-      },
-      {
-        id: 4,
-        title: "Ola Englund",
-        videoUrl: "https://www.youtube.com/embed/hlWiI4xVXKY"
-      },
-      {
-        id: 5,
-        title: "Ola Englund",
-        videoUrl: "https://www.youtube.com/embed/hlWiI4xVXKY"
+    spinner: {
+      isLoading: false,
+      color: "#D9D57C",
+      size: "20px"
+    },
+
+    videos: []
+  }),
+  created() {
+    this.getAllVideos();
+  },
+  methods: {
+    async getAllVideos() {
+      this.spinner.isLoading = true;
+      try {
+        await firebaseApp
+          .firestore()
+          .collection("videos")
+          .get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              let document = doc.data();
+              document.id = doc.id;
+              this.videos.push(document);
+            });
+          });
+        this.spinner.isLoading = false;
+      } catch (e) {
+        this.spinner.isLoading = false;
       }
-    ]
-  })
+    }
+  }
 };
 </script>
 
@@ -65,7 +80,7 @@ export default {
   .videos {
     display: grid;
     grid-gap: 3em;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 
     &__item {
       h2 {

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import db from "../firebase/firebase";
+import firebaseApp from "../firebase/firebase";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
@@ -55,7 +55,8 @@ export default {
       this.spinner.isLoading = true;
       const category = this.$route.params.title;
       try {
-        await db
+        await firebaseApp
+          .firestore()
           .collection("sketches")
           .where("category", "==", category)
           .get()

@@ -72,7 +72,7 @@ export default {
 
   methods: {
     addVideo() {
-      this.$router.push({ name: "Add-Sketch" });
+      this.$router.push({ name: "Add-Video" });
     },
 
     /**
@@ -100,7 +100,7 @@ export default {
     },
 
     editVideo(id) {
-      this.$router.push({ name: "EditSketch", params: { id: id } });
+      this.$router.push({ name: "EditVideo", params: { id: id } });
     },
 
     async deleteVideo(id) {
@@ -108,7 +108,7 @@ export default {
       try {
         await firebaseApp
           .firestore()
-          .collection("sketches")
+          .collection("videos")
           .doc(id)
           .delete()
           .then(() => {
