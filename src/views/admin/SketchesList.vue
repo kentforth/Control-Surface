@@ -37,7 +37,7 @@
                 </button>
                 <button
                   class="btn-transparent"
-                  @click="deleteSketch(sketch.id)"
+                  @click="deleteSketch(sketch.id, sketch.imageNames)"
                 >
                   <fa icon="trash" type="fas" class="icon icon-trash" />
                 </button>
@@ -113,9 +113,10 @@ export default {
     /**
      * delete sketch
      * @param id
-     * @returns {Promise<void>}
+     * @param imageNames
+     * @returns {Promise<void>}*
      */
-    async deleteSketch(id) {
+    async deleteSketch(id, imageNames) {
       this.spinner.isLoading = true;
       try {
         await firebaseApp
@@ -125,7 +126,7 @@ export default {
           .delete()
           .then(() => {
             this.sketches = [];
-            this.deleteImages(id);
+            this.deleteImages(id, imageNames);
             this.getAllSketches();
           });
 
@@ -136,16 +137,21 @@ export default {
     },
 
     /**
-     * delete folder with images in Firebase
+     * delete images from Firebase
      * @param id
+     * @param imageNames
      * @returns {Promise<void>}
      */
-    async deleteImages(id) {
+    async deleteImages(id, imageNames) {
       try {
-        await firebaseApp
-          .storage(`sketches/${id}`)
-          .ref(id)
-          .delete();
+        if (imageNames.length) {
+          imageNames.forEach(el => {
+            firebaseApp
+              .storage()
+              .ref(`sketches/${id}/${el}`)
+              .delete();
+          });
+        }
       } catch (e) {
         this.spinner.isLoading = false;
       }

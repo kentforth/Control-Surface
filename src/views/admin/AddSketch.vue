@@ -220,11 +220,15 @@ export default {
      * @returns {Promise<void>}
      */
     saveSketchInFirebase() {
+      const imageNames = [];
       try {
         const dataBase = firebaseApp
           .firestore()
           .collection("sketches")
           .doc();
+        this.uploadImages?.forEach(el => {
+          imageNames.push(el.name);
+        });
         dataBase.set({
           title: this.form.title,
           text: this.form.text,
@@ -232,6 +236,11 @@ export default {
           category: this.form.category,
           imagesCount: this.uploadImages.length
         });
+        if (imageNames.length) {
+          dataBase.update({
+            imageNames: imageNames
+          });
+        }
         return dataBase;
       } catch (e) {
         this.spinner.isLoading = false;
