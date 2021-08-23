@@ -27,7 +27,9 @@
           <tr v-for="sketch in sketches" :key="sketch.id">
             <td>{{ sketch.id }}</td>
             <td>{{ sketch.title }}</td>
-            <td>{{ sketch.text }}</td>
+            <td class="table-text">
+              <p>{{ sketch.text }}</p>
+            </td>
             <td>{{ sketch.category }}</td>
             <td>{{ sketch.tutorialUrl }}</td>
             <td>
@@ -219,6 +221,13 @@ export default {
       tbody {
         max-height: 500px;
         overflow-y: scroll;
+      }
+
+      .table-text p {
+        width: 400px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

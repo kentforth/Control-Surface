@@ -47,6 +47,9 @@
           <router-link :to="{ name: 'Tutorials' }">
             <span @click="toggleNav">Video Tutorials</span>
           </router-link>
+          <router-link :to="{ name: 'Files' }">
+            <span @click="toggleNav">Files</span>
+          </router-link>
           <router-link :to="{ name: 'Contact' }">
             <span @click="toggleNav">Contact</span>
           </router-link>

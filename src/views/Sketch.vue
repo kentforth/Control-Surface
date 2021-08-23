@@ -116,6 +116,9 @@ export default {
       navigator.clipboard.writeText(this.sketch.text);
     },
 
+    /**
+     * get sketch
+     */
     async getSketch() {
       this.spinner.isLoading = true;
       try {
@@ -129,7 +132,7 @@ export default {
             document.id = snapshot.id;
             this.sketch = document;
             this.sketch.images = [];
-            this.getImageFromFirebase();
+            this.getImagesFromFirebase();
           });
         this.spinner.isLoading = false;
       } catch (e) {
@@ -138,7 +141,11 @@ export default {
       }
     },
 
-    async getImageFromFirebase() {
+    /**
+     * get images from Firebase
+     * @returns {Promise<void>}
+     */
+    async getImagesFromFirebase() {
       if (this.sketch.imagesCount) {
         if (this.sketch.imageNames.length) {
           try {

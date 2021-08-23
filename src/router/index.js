@@ -50,6 +50,15 @@ const routes = [
     component: () => import("../views/Tutorials")
   },
   {
+    path: "/files",
+    name: "Files",
+    meta: {
+      title: "Files",
+      layout: Default
+    },
+    component: () => import("../views/Files")
+  },
+  {
     path: "/contact",
     name: "Contact",
     meta: {
