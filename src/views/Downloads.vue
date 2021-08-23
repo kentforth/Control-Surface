@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="files">
-      <h1>Files</h1>
+      <h1>Downloads</h1>
       <div class="files-list">
         <div class="files-list__item" v-for="file in files" :key="file.id">
           <h2>{{ file.title }}</h2>
@@ -23,7 +23,7 @@
 import Button from "@/components/Button";
 
 export default {
-  name: "Files",
+  name: "Downloads",
   components: { Button },
   data: () => ({
     button: {

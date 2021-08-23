@@ -97,5 +97,11 @@ export default {
   @include responsive(phone) {
     padding: 5em 0 2em 0;
   }
+
+  .spinner {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+  }
 }
 </style>
