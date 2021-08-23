@@ -5,7 +5,7 @@
       kentforth@mail.ru
     </a>
     <a href="https://vk.com/id157065407" target="_blank">
-      <fa icon="vk" type="fab" class="icon" />
+      <fa icon="vk" type="fab" class="icon icon-vk" />
       vkontakte
     </a>
   </div>

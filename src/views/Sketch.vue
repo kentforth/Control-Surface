@@ -140,19 +140,24 @@ export default {
 
     async getImageFromFirebase() {
       if (this.sketch.imagesCount) {
-        for (let i = 1; i <= this.sketch.imagesCount; i++) {
+        if (this.sketch.imageNames.length) {
           try {
-            const image = await firebase
-              .storage()
-              .ref(`sketches/${this.sketch.id}`)
-              .child(`${this.sketch.title}_${i}.webp`)
-              .getDownloadURL();
-            this.sketch.images.push(image);
+            this.sketch.imageNames.forEach(el => {
+              const image = firebase
+                .storage()
+                .ref(`sketches/${this.sketch.id}`)
+                .child(el)
+                .getDownloadURL();
+
+              image.then(el => {
+                this.sketch.images.push(el);
+                this.sketch.thumbnail = this.sketch.images[0];
+              });
+            });
           } catch (e) {
             throw new Error(e);
           }
         }
-        this.sketch.thumbnail = this.sketch.images[0];
       }
     }
   }
